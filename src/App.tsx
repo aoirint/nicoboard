@@ -1,6 +1,15 @@
 import React from 'react'
 import logo from './logo.svg'
 import './App.css'
+// const { ipcRenderer } = window.require('electron')
+
+import { IpcRenderer } from 'electron'
+
+declare global {
+  interface Window {
+    ipcRenderer: IpcRenderer
+  }
+}
 
 function App (): JSX.Element {
   return (
@@ -10,14 +19,17 @@ function App (): JSX.Element {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
+        <button
           className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
+          onClick={() => {
+            console.log('OK')
+            window.ipcRenderer.postMessage('button-clicked', {
+              key: 'value!'
+            })
+          }}
         >
-          Learn React
-        </a>
+          Send Message
+        </button>
       </header>
     </div>
   )
