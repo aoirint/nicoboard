@@ -17,7 +17,7 @@
     "format": "ts-standard --fix",
     "postinstall": "electron-builder install-app-deps",
     "electron:dev": "concurrently --kill-others --success first \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && tsc -w\" \"wait-on http://localhost:3000 && tsc && electron .\"",
-    "electron:build": "npm build && tsc -p electron && electron-builder"
+    "electron:build": "npm run build && tsc -p electron && electron-builder"
   },
   "main": "build/electron/main.js",
   "build": {
