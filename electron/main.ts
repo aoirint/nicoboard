@@ -9,13 +9,15 @@ function createWindow (): void {
     height: 600,
     webPreferences: {
       contextIsolation: true,
+      // build/electron/main.js -> build/electron/preload.js
       preload: path.join(__dirname, 'preload.js')
     }
   })
 
   if (app.isPackaged) {
-    // 'build/index.html'
-    win.loadURL(path.join(__dirname, '..', 'index.html')).catch((error: unknown) => {
+    // build/electron/main.js -> build/index.html
+    const indexUrl = 'file://' + path.join(__dirname, '..', 'index.html')
+    win.loadURL(indexUrl).catch((error: unknown) => {
       console.error(error)
     })
   } else {
@@ -30,6 +32,7 @@ function createWindow (): void {
 
   // Hot Reloading
   if (!app.isPackaged) {
+    console.log('Hot reloading enabled')
     // 'node_modules/.bin/electronPath'
     const electronReload = require('electron-reload') // eslint-disable-line @typescript-eslint/no-var-requires
     electronReload(__dirname, {
