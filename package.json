@@ -16,7 +16,7 @@
     "lint": "ts-standard",
     "format": "ts-standard --fix",
     "postinstall": "electron-builder install-app-deps",
-    "electron:dev": "concurrently --kill-others --success first \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && tsc -w\" \"wait-on http://localhost:3000 && tsc && electron .\"",
+    "electron:dev": "concurrently --kill-others --success first \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && tsc -w\" \"wait-on http://localhost:3000 && tsc && electron .\"",
     "electron:build": "npm build && tsc -p electron && electron-builder"
   },
   "main": "build/electron/main.js",
@@ -68,6 +68,7 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
     "electron": "^16.0.7",
     "electron-builder": "^22.14.5",
     "electron-reload": "^2.0.0-alpha.1",
