@@ -8,7 +8,7 @@ function createWindow (): void {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: false,
+      contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
     }
 })
@@ -56,7 +56,6 @@ app.on('activate', () => {
   }
 })
 
-ipcMain.on('button-clicked', (event, msg) => {
-  console.log(event)
-  console.log(msg)
+ipcMain.handle('button-clicked', async (event, obj) => {
+  console.log(obj)
 })

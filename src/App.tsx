@@ -1,13 +1,16 @@
 import React from 'react'
 import logo from './logo.svg'
 import './App.css'
-// const { ipcRenderer } = window.require('electron')
 
 import { IpcRenderer } from 'electron'
 
+interface ElectronContextBridge {
+  ipcRenderer: IpcRenderer
+}
+
 declare global {
   interface Window {
-    ipcRenderer: IpcRenderer
+    electron: ElectronContextBridge
   }
 }
 
@@ -21,9 +24,8 @@ function App (): JSX.Element {
         </p>
         <button
           className='App-link'
-          onClick={() => {
-            console.log('OK')
-            window.ipcRenderer.postMessage('button-clicked', {
+          onClick={async () => {
+            await window.electron.ipcRenderer.invoke('button-clicked', {
               key: 'value!'
             })
           }}
