@@ -11,7 +11,7 @@ function createWindow (): void {
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
     }
-})
+  })
 
   if (app.isPackaged) {
     // 'build/index.html'
@@ -31,7 +31,8 @@ function createWindow (): void {
   // Hot Reloading
   if (!app.isPackaged) {
     // 'node_modules/.bin/electronPath'
-    require('electron-reload')(__dirname, {
+    const electronReload = require('electron-reload') // eslint-disable-line @typescript-eslint/no-var-requires
+    electronReload(__dirname, {
       electron: path.join(__dirname, '..', '..', 'node_modules', '.bin', 'electron'),
       forceHardReset: true,
       hardResetMethod: 'exit'
