@@ -1,4 +1,4 @@
-# nicoboard
+# electron-typescript-create-react-app-example
 
 ## Development
 
