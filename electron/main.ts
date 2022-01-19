@@ -1,6 +1,5 @@
 import { app, ipcMain, BrowserWindow } from 'electron'
 import * as path from 'path'
-import * as isDev from 'electron-is-dev'
 
 let win: BrowserWindow | null = null
 
@@ -14,13 +13,13 @@ function createWindow (): void {
     }
 })
 
-  if (isDev) {
-    win.loadURL('http://localhost:3000/index.html').catch((error: unknown) => {
+  if (app.isPackaged) {
+    // 'build/index.html'
+    win.loadURL(path.join(__dirname, '..', 'index.html')).catch((error: unknown) => {
       console.error(error)
     })
   } else {
-    // 'build/index.html'
-    win.loadURL(path.join(__dirname, '..', 'index.html')).catch((error: unknown) => {
+    win.loadURL('http://localhost:3000/index.html').catch((error: unknown) => {
       console.error(error)
     })
   }
@@ -30,7 +29,7 @@ function createWindow (): void {
   })
 
   // Hot Reloading
-  if (isDev) {
+  if (!app.isPackaged) {
     // 'node_modules/.bin/electronPath'
     require('electron-reload')(__dirname, {
       electron: path.join(__dirname, '..', '..', 'node_modules', '.bin', 'electron'),
