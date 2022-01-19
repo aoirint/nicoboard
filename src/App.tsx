@@ -2,6 +2,18 @@ import React from 'react'
 import logo from './logo.svg'
 import './App.css'
 
+import { IpcRenderer } from 'electron'
+
+interface ElectronContextBridge {
+  ipcRenderer: IpcRenderer
+}
+
+declare global {
+  interface Window {
+    electron: ElectronContextBridge
+  }
+}
+
 function App (): JSX.Element {
   return (
     <div className='App'>
@@ -10,14 +22,16 @@ function App (): JSX.Element {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
+        <button
           className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
+          onClick={async () => {
+            await window.electron.ipcRenderer.invoke('button-clicked', {
+              key: 'value!'
+            })
+          }}
         >
-          Learn React
-        </a>
+          Send Message
+        </button>
       </header>
     </div>
   )
